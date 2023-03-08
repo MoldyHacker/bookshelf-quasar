@@ -4,6 +4,7 @@
       v-for="book in books"
       :book="book"
       :key="book.id"
+      @bookmark-book="bookmarkIt"
     />
   </div>
 </template>
@@ -17,6 +18,10 @@ export default defineComponent({
   components: {BookListItem},
   props: {
     books: Array,
+  },
+  methods: {
+    bookmarkIt(book: any){this.$emit('bookmark-book',book);
+      console.log('bookmark b', book)}
   },
   setup () {
     return {};

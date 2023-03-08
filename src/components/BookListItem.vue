@@ -1,9 +1,9 @@
 <template>
-    <q-card class="my-card">
+    <q-card class="my-card" @mouseenter="visible = true" @mouseleave="visible = false">
 
 <!--      <img :src="book.src" width="250px">-->
       <q-card-section horizontal>
-        <q-btn flat rounded @click="!book.bookmark" :icon="book.bookmark ? 'bookmark' : 'bookmark_outline' "/>
+        <q-btn flat rounded @click="$emit('bookmark-book',book)" :icon="book.bookmark ? 'bookmark' : 'bookmark_outline' "/>
         <span class="text-h6">{{ trunc(book.title, 39) }}</span>
       </q-card-section>
 
@@ -11,27 +11,23 @@
 
       <q-card-section class="q-pt-none">
         <q-icon color="black" name="person"  size="24px"/>
-        <span class="text-subtitle2 q-pl-md">{{ trunc(book.author, 39) }}</span>
+        <span class="text-subtitle2 q-pl-md">{{ trunc(book.author, 18) }}</span>
       </q-card-section>
 
-      <q-list>
-        <q-item clickable>
-          <q-item-section avatar>
-            <q-icon color="primary" name="local_bar" />
-          </q-item-section>
 
-          <q-item-section>
-            <q-item-label>Bar XYZ</q-item-label>
-            <q-item-label caption>Have a drink.</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
 
-        <q-expansion-item>
+      <div class="card-actions">
+      <q-card-actions align="right" v-show="visible">
+        <q-btn flat icon="edit" >Edit</q-btn>
+        <q-btn flat icon="delete" >Delete</q-btn>
+      </q-card-actions>
+      </div>
+        <q-expansion-item
+        label="#tags"
+        label-lines="1"
+        >
           <q-card-section>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-            commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
-            eveniet doloribus ullam aliquid.
+            #tag1 #tag2 #tag3
           </q-card-section>
         </q-expansion-item>
     </q-card>
@@ -62,10 +58,14 @@ export default defineComponent ({
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .my-card {
     width: 250px;
     /*max-height: 250px;*/
     max-height: 500px;
+  }
+
+  .card-actions {
+    height: 50px;
   }
 </style>

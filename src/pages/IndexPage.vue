@@ -1,21 +1,12 @@
 <template>
   <q-page class="row items-baseline justify-evenly">
-<!--    <example-component-->
-<!--      title="Example component"-->
-<!--      active-->
-<!--      :todos="todos"-->
-<!--      :meta="meta"-->
-<!--    ></example-component>-->
-    <book-list :books="books"/>
+    <book-list :books="books" @bookmark-book="bookmarkTheBook" />
   </q-page>
 </template>
 
 <script lang="ts">
-import { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/ExampleComponent.vue';
 import BookList from 'components/BookList.vue';
-import { defineComponent, ref } from 'vue';
-import {useBookStore} from 'stores/book-store';
+import { ref } from 'vue';
 import { useLocalBooks } from 'src/code';
 
 export default {
@@ -23,6 +14,8 @@ export default {
   components: {
     BookList
   },
+  // methods: {
+  // },
   // data() {
   //   return {
   //     books: [
@@ -45,12 +38,13 @@ export default {
         { id: 4, title: 'Best airlines', author: 'N/A', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', bookmark: true},
       ])
 
-    const book = useBookStore().books;
+    let deleteIt = (book: { id: number; title: string; author: string; src: string; bookmark: boolean; }) => {books.value.splice(books.value.indexOf(book),1)};
+    let bookmarkTheBook = (book: any) => {
+      books.value[books.value.indexOf(book)].bookmark = !book.bookmark;
+    };
     return {
       books,
-      // book
-
-      // visible: ref(true)
+      bookmarkTheBook,
     }
   },
 
@@ -77,8 +71,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .my-card {
-    width: 250px;
-    height: 250px;
-  }
+
 </style>
