@@ -1,13 +1,13 @@
 <template>
   <q-page class="row items-baseline justify-evenly">
-    <book-list :books="books" @bookmark-book="bookmarkTheBook" />
+    <book-list :books="books" />
   </q-page>
 </template>
 
 <script lang="ts">
 import BookList from 'components/BookList.vue';
 import { ref } from 'vue';
-import { useLocalBooks } from 'src/code';
+import {Book, BookItem } from 'src/components/app-models';
 
 export default {
   name: 'IndexPage',
@@ -28,23 +28,14 @@ export default {
   // },
 
   setup() {
-    // const books = useLocalBooks()
     const books = ref([
-        { id: 1, title: 'Harry Potter and the Sorcerers Stone', author: 'J.K. Rowling', src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg', bookmark: true },
-        { id: 2, title: 'Favorite road trips', author: 'N/A', src: 'https://cdn.vuetifyjs.com/images/cards/road.jpg', bookmark: false },
-        { id: 3, title: 'Best airlines', author: 'N/A', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', bookmark: false },
-        { id: 4, title: 'Best airlines', author: 'N/A', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', bookmark: true},
-        { id: 4, title: 'Best airlines', author: 'N/A', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', bookmark: true},
-        { id: 4, title: 'Best airlines', author: 'N/A', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', bookmark: true},
+      new BookItem(new Book('Harry Potter and the Sorcerers Stone', 'J.K. Rowling'), true),
+      new BookItem(new Book('Paper Towns', 'John Green'), true),
+      new BookItem(new Book('Best Airplanes', 'N/A'), false),
       ])
 
-    let deleteIt = (book: { id: number; title: string; author: string; src: string; bookmark: boolean; }) => {books.value.splice(books.value.indexOf(book),1)};
-    let bookmarkTheBook = (book: any) => {
-      books.value[books.value.indexOf(book)].bookmark = !book.bookmark;
-    };
     return {
       books,
-      bookmarkTheBook,
     }
   },
 
