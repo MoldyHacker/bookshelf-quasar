@@ -60,7 +60,8 @@ export default {
       get() { return this.modelValue },
       set(value) { this.$emit('update:modelValue', value)}
     }
-  }
+  },
+  methods: {},
 }
 </script>
 

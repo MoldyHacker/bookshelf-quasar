@@ -1,17 +1,20 @@
 <template>
+  <search-component></search-component>
   <q-page class="row items-baseline justify-evenly">
-    <book-list :books="books" />
   </q-page>
+  <book-list :books="books" />
 </template>
 
 <script lang="ts">
 import BookList from 'components/BookList.vue';
 import { ref } from 'vue';
 import {Book, BookItem } from 'src/components/app-models';
+import SearchComponent from 'components/SearchComponents/SearchComponent.vue';
 
 export default {
   name: 'IndexPage',
   components: {
+    SearchComponent,
     BookList
   },
   // methods: {
@@ -32,10 +35,13 @@ export default {
       new BookItem(new Book('Harry Potter and the Sorcerers Stone', 'J.K. Rowling'), true),
       new BookItem(new Book('Paper Towns', 'John Green'), true),
       new BookItem(new Book('Best Airplanes', 'N/A'), false),
-      ])
+      ]);
+
+    const addBook = (book: BookItem) => {this.books.push(book)};
 
     return {
       books,
+      addBook,
     }
   },
 

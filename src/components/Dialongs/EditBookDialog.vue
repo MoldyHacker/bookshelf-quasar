@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import {}
 export default {
   name: 'EditBookDialog',
   props: ['modelValue', 'book'],

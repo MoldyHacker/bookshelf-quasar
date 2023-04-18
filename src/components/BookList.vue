@@ -12,6 +12,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import BookListItem from 'components/BookListItem.vue';
+import { Book } from './app-models';
 
 export default defineComponent({
   name: 'BookList',
@@ -20,7 +21,7 @@ export default defineComponent({
     books: Array,
   },
   methods: {
-    bookmarkIt(book: any){this.$emit('bookmark-book',book);
+    bookmarkIt(book: Book){this.$emit('bookmark-book',book);
       console.log('bookmark b', book)}
   },
   setup () {
