@@ -58,8 +58,8 @@ import BookList from 'components/BookList.vue';
 import Book from 'src/models/Book';
 import BookItem from 'src/models/BookItem';
 import SearchComponent from 'components/SearchComponents/SearchComponent.vue';
-import AddBookAutoDialog from 'components/Dialongs/AddBook/AddBookAutoDialog.vue';
-import AddBookManualDialog from 'components/Dialongs/AddBook/AddBookManualDialog.vue';
+import AddBookAutoDialog from 'components/Dialogs/AddBook/AddBookAutoDialog.vue';
+import AddBookManualDialog from 'components/Dialogs/AddBook/AddBookManualDialog.vue';
 
 export default {
   name: 'IndexPage',

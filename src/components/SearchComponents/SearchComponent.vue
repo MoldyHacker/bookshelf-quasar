@@ -33,6 +33,7 @@
 <script>
 export default {
   name: 'SearchComponent',
+  emits: ['search-obj'],
   data() {
     return {
       searchObj: {

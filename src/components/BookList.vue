@@ -18,8 +18,6 @@
 <script>
 import { defineComponent } from 'vue';
 import BookListItem from 'components/BookListItem.vue';
-// import Book from '../models/Book';
-// import BookItem from '../models/BookItem';
 
 export default defineComponent({
   name: 'BookList',

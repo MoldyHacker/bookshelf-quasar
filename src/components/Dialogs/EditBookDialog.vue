@@ -3,17 +3,17 @@
     <q-card>
       <q-card-section class="row">
         <span class="col-10 text-h6">Edit Book</span>
-        <!--                <q-btn class="col" flat rounded @click="newBook.bookmarkToggle()" :icon="newBook.bookmark ? 'bookmark' : 'bookmark_outline' "/>-->
-        <q-checkbox
-          class="col"
-          :v-model="book.bookmark"
-          checked-icon="bookmark"
-          unchecked-icon="bookmark_outline"
-          indeterminate-icon="help"
-          color="black"
-          size="48px"
-          dense
-        />
+        <q-btn flat rounded @click="newBook.bookmarkToggle()" :icon="newBook.bookmark ? 'bookmark' : 'bookmark_outline' "/>
+<!--        <q-checkbox-->
+<!--          class="col"-->
+<!--          v-model="book.bookmark"-->
+<!--          checked-icon="bookmark"-->
+<!--          unchecked-icon="bookmark_outline"-->
+<!--          indeterminate-icon="help"-->
+<!--          color="black"-->
+<!--          size="48px"-->
+<!--          dense-->
+<!--        />-->
       </q-card-section>
 
       <q-card-section class="q-pt-none q-gutter-sm">
@@ -38,7 +38,9 @@
 </template>
 
 <script>
-export default {
+import {defineComponent} from 'vue';
+
+export default defineComponent ({
   name: 'EditBookDialog',
   props: ['modelValue', 'book'],
   emits: ['update:model-value', 'save-book'],
@@ -64,7 +66,7 @@ export default {
       this.$emit('save-book',this.newBook);
     }
   }
-}
+})
 </script>
 
 <style scoped>

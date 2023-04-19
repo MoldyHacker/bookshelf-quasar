@@ -7,7 +7,9 @@
 </template>
 
 <script>
-export default {
+import {defineComponent} from 'vue';
+
+export default defineComponent({
   name: 'ToolTipButton',
   props: {
     toolTip: {
@@ -23,7 +25,7 @@ export default {
       default: '',
     },
   },
-}
+})
 </script>
 
 <style scoped>
