@@ -19,7 +19,7 @@
 
       <search-component @search-obj="searchUpdate" />
 
-      <book-list :books="books" :search="searchObj" @delete-book="removeBook" />
+      <book-list :books="books" :search="searchObj" @delete-book="removeBook" @save-book="saveBook" />
 
       <add-book-auto-dialog v-model="addBookAutomagically" />
       <add-book-manual-dialog v-model="addBookManually" @add-item="addBook" />
@@ -89,6 +89,11 @@ export default {
     removeBook(book) {
       this.books.splice(this.books.indexOf(book),1);
       // console.log('removed book', book);
+    },
+
+    saveBook(book) {
+      this.books.splice(this.book.indexOf(book.id), 1);
+      this.books.push()
     },
   },
   data() {

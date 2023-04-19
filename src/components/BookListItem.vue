@@ -17,7 +17,7 @@
     </template>
   </book-list-item-details>
 
-  <edit-book-dialog v-model="editDialog" :book="book" />
+  <edit-book-dialog v-model="editDialog" :book="book" @save-book="this.$emit('save-book', book)" />
 </template>
 
 <script>
@@ -29,7 +29,7 @@ import ToolTipButton from 'components/Buttons/ToolTipButton.vue';
 export default defineComponent ({
   name: 'BookListItem',
   components: {ToolTipButton, EditBookDialog, BookListItemDetails},
-  emits: ['delete-book'],
+  emits: ['delete-book', 'save-book'],
   props: {
     book: {
       type: Object,
@@ -42,7 +42,7 @@ export default defineComponent ({
 
     editBook() {
       console.log('edit book dialog')
-      this.editDialog = false;
+      this.editDialog = true;
     }
   },
   data () {

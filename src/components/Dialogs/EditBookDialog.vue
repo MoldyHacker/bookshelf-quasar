@@ -3,7 +3,7 @@
     <q-card>
       <q-card-section class="row">
         <span class="col-10 text-h6">Edit Book</span>
-        <q-btn flat rounded @click="newBook.bookmarkToggle()" :icon="newBook.bookmark ? 'bookmark' : 'bookmark_outline' "/>
+        <q-btn class="col" flat rounded @click="newBook.bookmarkToggle()" :icon="newBook.bookmark ? 'bookmark' : 'bookmark_outline' "/>
 <!--        <q-checkbox-->
 <!--          class="col"-->
 <!--          v-model="book.bookmark"-->
@@ -44,7 +44,7 @@ export default defineComponent ({
   name: 'EditBookDialog',
   props: ['modelValue', 'book'],
   emits: ['update:model-value', 'save-book'],
-  date() {
+  data() {
     return {
       newBook: {...this.book}
     }
@@ -62,8 +62,10 @@ export default defineComponent ({
   methods: {
     saveBook() {
       // eslint-disable-next-line vue/no-mutating-props
-      this.book = {...this.newBook};
-      this.$emit('save-book',this.newBook);
+      // this.book = {...this.newBook};
+      // eslint-disable-next-line vue/no-mutating-props
+      this.book.book.title = this.newBook.book.title;
+      // this.$emit('save-book',this.newBook);
     }
   }
 })

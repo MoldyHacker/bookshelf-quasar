@@ -6,6 +6,7 @@
         :book="book"
         :key="book.book.title"
         @delete-book="deleteIt"
+        @save-book="saveIt"
       />
 
       <h3 class="animate__animated animate__headShake noBooks" v-if="!returnFiltered.length">
@@ -22,7 +23,7 @@ import BookListItem from 'components/BookListItem.vue';
 export default defineComponent({
   name: 'BookList',
   components: {BookListItem},
-  emits: ['delete-book'],
+  emits: ['delete-book', 'save-book'],
   props: {
     books: Array,
     search: {
@@ -58,6 +59,10 @@ export default defineComponent({
     deleteIt(book){
       this.$emit('delete-book', book);
       // console.log('delete b', book)
+    },
+
+    saveIt(book) {
+      this.$emit('save-book', book);
     },
 
     // If bookmark toggle is selected from searchbar, filter to only bookmarked books
