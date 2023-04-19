@@ -30,10 +30,27 @@
 </template>
 
 <script>
+import ToolTipButton from 'components/ToolTipButton.vue';
+
 export default {
-  name: 'BookListItemDetails'
-}
-</script>
+  name: 'BookListItemDetails',
+  components: {ToolTipButton},
+  props: {
+    book: {
+      type: Object,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      visible: false, // mouseover buttons
+    }
+  },
+  methods: {
+    // truncate title and author names
+    trunc(str, cha) { return str?.length > cha ? str.substring(0, cha) + '...' : str ?? 'N/A' },
+  },
+}</script>
 
 <style scoped>
 

@@ -1,70 +1,130 @@
 <template>
-  <search-component></search-component>
-  <q-page class="row items-baseline justify-evenly">
-  </q-page>
-  <book-list :books="books" />
+  <q-layout view="hHh lpR fFf">
+
+    <q-header elevated class="bg-primary text-white" height-hint="98">
+      <q-toolbar>
+        <q-toolbar-title>
+          <div class="row">
+            <q-avatar>
+              <q-icon name="library_books" size="30px"></q-icon>
+            </q-avatar>
+            Bookshelf
+          </div>
+        </q-toolbar-title>
+      </q-toolbar>
+
+    </q-header>
+
+    <q-page-container>
+
+      <search-component @search-obj="searchUpdate" />
+
+      <book-list :books="books" :search="searchObj" @delete-book="removeBook" />
+
+      <add-book-auto-dialog v-model="addBookAutomagically" />
+      <add-book-manual-dialog v-model="addBookManually" @add-item="addBook" />
+
+    </q-page-container>
+
+    <!--FAB for adding a book-->
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <q-fab
+        icon="add"
+        direction="up"
+        color="accent"
+      >
+        <q-fab-action external-label label-position="left" @click="addBookManually = true" color="primary" icon="menu_book" label="Add Manually" ></q-fab-action>
+        <q-fab-action external-label label-position="left" @click="addBookAutomagically = true" color="primary" icon="collections_bookmark" label="Add Automagically" ></q-fab-action>
+      </q-fab>
+    </q-page-sticky>
+
+    <q-footer elevated class="bg-grey-8 text-white">
+      <q-toolbar>
+        <q-toolbar-title>
+          <!--            <q-avatar>-->
+          <!--              <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">-->
+          <!--            </q-avatar>-->
+          <!--            <div>Title</div>-->
+        </q-toolbar-title>
+      </q-toolbar>
+    </q-footer>
+
+  </q-layout>
 </template>
 
-<script lang="ts">
+<script>
 import BookList from 'components/BookList.vue';
-import { ref } from 'vue';
-import {Book, BookItem } from 'src/components/app-models';
+// import { ref } from 'vue';
+import Book from 'src/models/Book';
+import BookItem from 'src/models/BookItem';
 import SearchComponent from 'components/SearchComponents/SearchComponent.vue';
+import AddBookAutoDialog from 'components/Dialongs/AddBook/AddBookAutoDialog.vue';
+import AddBookManualDialog from 'components/Dialongs/AddBook/AddBookManualDialog.vue';
 
 export default {
   name: 'IndexPage',
   components: {
+    AddBookManualDialog,
+    AddBookAutoDialog,
+    BookList,
     SearchComponent,
-    BookList
   },
-  // methods: {
-  // },
-  // data() {
-  //   return {
-  //     books: [
-  //       { id: 1, title: 'Pre-fab homes', src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg', bookmark: true },
-  //       { id: 2, title: 'Favorite road trips', src: 'https://cdn.vuetifyjs.com/images/cards/road.jpg', bookmark: false },
-  //       { id: 3, title: 'Best airlines', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', bookmark: false },
-  //       { id: 4, title: 'Best airlines', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', bookmark: true},
-  //     ],
-  //   }
-  // },
+  methods: {
+    // update the Search Object from the search bar component
+    searchUpdate(searchO) {
+      this.searchObj = searchO;
+      // console.log('working', this.searchObj)
+    },
 
-  setup() {
-    const books = ref([
-      new BookItem(new Book('Harry Potter and the Sorcerers Stone', 'J.K. Rowling'), true),
-      new BookItem(new Book('Paper Towns', 'John Green'), true),
-      new BookItem(new Book('Best Airplanes', 'N/A'), false),
-      ]);
+    // Book manipulation
+    // Add Book
+    addBook(book) {
+      book.id = Date.now();
+      this.books.push(new BookItem( new Book(book.title, book.author), book.bookmark));
+      // console.log(this.books);
+      // console.log('book added', book);
+    },
 
-    const addBook = (book: BookItem) => {this.books.push(book)};
-
+    // Remove a book from the array
+    removeBook(book) {
+      this.books.splice(this.books.indexOf(book),1);
+      // console.log('removed book', book);
+    },
+  },
+  data() {
     return {
-      books,
-      addBook,
+      books: [
+        new BookItem(new Book('Harry Potter and the Sorcerers Stone', 'J.K. Rowling'), true),
+        new BookItem(new Book('Paper Towns', 'John Green'), true),
+        new BookItem(new Book('Best Airplanes', 'N/A'), false),
+      ],
+      searchObj: {
+        sortCategory: 'title',
+        searchTerm: '',
+        bookmark: false,
+      },
+      // Dialogs / Modals Controls
+      addBookAutomagically: false,
+      addBookManually: false,
     }
   },
 
+  // setup() {
+  //   const books = ref([
+  //     new BookItem(new Book('Harry Potter and the Sorcerers Stone', 'J.K. Rowling'), true),
+  //     new BookItem(new Book('Paper Towns', 'John Green'), true),
+  //     new BookItem(new Book('Best Airplanes', 'N/A'), false),
+  //     ]);
+  //
+  //   // const addBook = (book: BookItem) => {books.value.push(book)};
+  //
+  //   return {
+  //     books,
+  //     // addBook,
+  //   }
+  // },
+
 };
-
-
-// export default defineComponent({
-//   name: 'IndexPage',
-//   components: {BookList},
-//   // components: { ExampleComponent },
-//   setup () {
-//     const todos = ref<Todo[]>([
-//       { id: 1, content: 'ct1' },
-//       { id: 2, content: 'ct2' },
-//       { id: 3, content: 'ct3' },
-//     ]);
-//     const books = ref<[]>([])
-//     const meta = ref<Meta>({
-//       totalCount: 1200
-//     });
-//     return { todos, meta };
-//   }
-// });
 </script>
 
 <style lang="scss" scoped>

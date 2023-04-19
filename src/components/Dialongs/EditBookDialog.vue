@@ -6,7 +6,7 @@
         <!--                <q-btn class="col" flat rounded @click="newBook.bookmarkToggle()" :icon="newBook.bookmark ? 'bookmark' : 'bookmark_outline' "/>-->
         <q-checkbox
           class="col"
-          v-model="book.bookmark"
+          :v-model="book.bookmark"
           checked-icon="bookmark"
           unchecked-icon="bookmark_outline"
           indeterminate-icon="help"
@@ -38,11 +38,10 @@
 </template>
 
 <script>
-import {}
 export default {
   name: 'EditBookDialog',
   props: ['modelValue', 'book'],
-  emits: ['update:modelValue', 'save-book'],
+  emits: ['update:model-value', 'save-book'],
   date() {
     return {
       newBook: {...this.book}
@@ -60,6 +59,7 @@ export default {
   },
   methods: {
     saveBook() {
+      // eslint-disable-next-line vue/no-mutating-props
       this.book = {...this.newBook};
       this.$emit('save-book',this.newBook);
     }

@@ -1,1 +1,27 @@
 // app global css in SCSS form
+.constrain {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.book-card {
+  width: 250px;
+
+  .book-card-header {
+    height: 64px;
+    align-items: center;
+  }
+
+  .book-card-actions {
+    height: 52px;
+  }
+}
+
+.align-center {
+  margin-right: auto;
+  margin-left: auto;
+  align-items: center;
+  align-self: center;
+  justify-items: center;
+}

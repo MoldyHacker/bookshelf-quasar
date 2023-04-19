@@ -45,7 +45,7 @@
 export default {
   name: 'AddBookManualDialog',
   props: ['modelValue'],
-  emits: ['update:modelValue'],
+  emits: ['update:modelValue', 'add-item'],
   data() {
     return {
       newBook: {
@@ -61,7 +61,20 @@ export default {
       set(value) { this.$emit('update:modelValue', value)}
     }
   },
-  methods: {},
+  methods: {
+    addBook() {
+      this.$emit('add-item', this.newBook);
+      console.log(this.newBook);
+      this.resetBook();
+    },
+    resetBook() {
+      this.newBook = {
+        title: '',
+        author: '',
+        bookmark: false,
+      }
+    }
+  },
 }
 </script>
 

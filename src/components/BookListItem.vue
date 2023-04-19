@@ -1,58 +1,53 @@
 <template>
-    <q-card class="my-card" @mouseenter="visible = true" @mouseleave="visible = false">
+  <book-list-item-details :book="book.book">
+    <template v-slot:bookmark>
+      <q-checkbox
+        :v-model="book.bookmark"
+        checked-icon="bookmark"
+        unchecked-icon="bookmark_outline"
+        indeterminate-icon="help"
+        color="black"
+        size="48px"
+      />
+<!--      <q-btn class="col" flat rounded @click="book.bookmark = !book.bookmark" :icon="book.bookmark ? 'bookmark' : 'bookmark_outline' "/>-->
+    </template>
+    <template v-slot:buttons>
+      <tool-tip-button icon="delete" toolTip="Delete" @click="$emit('delete-book', book)" />
+      <tool-tip-button icon="edit" toolTip="Edit" @click="editBook()" />
+    </template>
+  </book-list-item-details>
 
-<!--      <img :src="book.src" width="250px">-->
-      <q-card-section horizontal>
-        <q-btn flat rounded @click="$emit('bookmark-book',book)" :icon="book.bookmark ? 'bookmark' : 'bookmark_outline' "/>
-        <span class="text-h6">{{ trunc(book.title, 39) }}</span>
-      </q-card-section>
-
-      <q-separator inset />
-
-      <q-card-section class="q-pt-none">
-        <q-icon color="black" name="person"  size="24px"/>
-        <span class="text-subtitle2 q-pl-md">{{ trunc(book.author, 18) }}</span>
-      </q-card-section>
-
-
-
-      <div class="card-actions">
-      <q-card-actions align="right" v-show="visible">
-        <q-btn flat icon="edit" >Edit</q-btn>
-        <q-btn flat icon="delete" >Delete</q-btn>
-      </q-card-actions>
-      </div>
-        <q-expansion-item
-        label="#tags"
-        label-lines="1"
-        >
-          <q-card-section>
-            #tag1 #tag2 #tag3
-          </q-card-section>
-        </q-expansion-item>
-    </q-card>
+  <edit-book-dialog v-model:model-value="editDialog" :book="book" />
 </template>
 
-<script lang="ts">
+<script>
 import {defineComponent, ref} from 'vue';
-
-function trunc(str: string, cha: number) {
-  return str.length > cha ? str.substring(0,cha) + '...' : str;
-}
-
+import BookListItemDetails from 'components/BookListItemDetails.vue';
+import EditBookDialog from 'components/Dialongs/EditBookDialog.vue';
+import ToolTipButton from 'components/ToolTipButton.vue';
 
 export default defineComponent ({
   name: 'BookListItem',
+  components: {ToolTipButton, EditBookDialog, BookListItemDetails},
+  emits: ['delete-book'],
   props: {
     book: {
       type: Object,
       required: true,
     },
   },
-  methods: {trunc},
+  methods: {
+    // truncate title and author names
+    trunc(str, cha) { return str?.length > cha ? str.substring(0, cha) + '...' : str ?? 'N/A' },
+
+    editBook() {
+      this.editDialog = false;
+    }
+  },
   setup () {
     return {
-      visible: ref(false)
+      visible: ref(false),
+      editDialog: ref(false),
     }
   },
 })
