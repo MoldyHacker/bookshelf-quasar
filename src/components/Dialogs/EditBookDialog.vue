@@ -62,9 +62,9 @@ export default defineComponent ({
   methods: {
     saveBook() {
       // eslint-disable-next-line vue/no-mutating-props
-      // this.book = {...this.newBook};
+      this.book = {...this.newBook};
       // eslint-disable-next-line vue/no-mutating-props
-      this.book.book.title = this.newBook.book.title;
+      // this.book.book.title = this.newBook.book.title;
       // this.$emit('save-book',this.newBook);
     }
   }

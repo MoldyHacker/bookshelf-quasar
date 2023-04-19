@@ -4,7 +4,7 @@
       <BookListItem
         v-for="book in returnFiltered"
         :book="book"
-        :key="book.book.title"
+        :key="book.id"
         @delete-book="deleteIt"
         @save-book="saveIt"
       />
